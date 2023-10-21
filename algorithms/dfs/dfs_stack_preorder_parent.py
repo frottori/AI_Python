@@ -1,8 +1,4 @@
-<<<<<<< HEAD:algorithms/dfs/dfs.py
 # General DFS for Directed Graph
-
-=======
->>>>>>> 6bb1d4c (Fixing Bugs):algorithms/dfs/dfs_stack_preorder_parent.py
 from collections import deque
 
 graph = {
