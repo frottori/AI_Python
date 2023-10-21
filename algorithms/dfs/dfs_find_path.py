@@ -1,5 +1,3 @@
-from collections import deque
-
 graph = {
     'A': ['B', 'C'],
     'B': ['E'],
