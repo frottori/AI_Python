@@ -1,4 +1,4 @@
-# General DFS for DAG (Directed Acyclic Graph)
+# General DFS for Directed Graph
 
 from collections import deque
 
