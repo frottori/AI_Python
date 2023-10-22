@@ -13,20 +13,22 @@ graph = {
     'H': ['G'] ,
 }
 
+visited = {}
+for v in graph:
+    visited[v] = False
+
 def find_children(node, graph):
-    queue = deque()
-    queue.append(node)
-    visited = set()
+    stack = [node]
     children = []
 
-    while queue:
-        current_node = queue.popleft()
-        if current_node not in visited:
-            visited.add(current_node)
+    while stack:
+        current_node = stack.pop()
+        if not visited[current_node]:
+            visited[current_node] = True
             children.append(current_node)
 
             for u in graph[current_node]:
-                queue.append(u)
+                stack.append(u)
     return children
 
 children = find_children('D',graph)
