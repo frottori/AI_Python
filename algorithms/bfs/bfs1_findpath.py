@@ -27,7 +27,6 @@ def bfs_shortest_path(graph, start, end):
         print(queue)
         # Πάρτε τον τελευταίο κόμβο στο μονοπάτι
         node = path[-1]
-        print(node)
         # Αν ο κόμβος είναι ο κόμβος προορισμού, επιστροφή του μονοπατιού και της απόστασης του
         if node == end:
             return (path, distance)
