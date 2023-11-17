@@ -1,7 +1,7 @@
 import copy
 import sys
 
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(8**6)
 
 # ******** Operators
 # ******** Τελεστές
@@ -9,48 +9,40 @@ sys.setrecursionlimit(10**6)
 
 def go_to_floor1(state):
     if state[-1]<8 and state[1]>0:
-        if state[1]>10-state[-1]:
-            new_state = [1] + [state[1] + state[-1] - 10] + [state[2]] + [state[3]] + [state[4]] + [8]
+        if state[1]>8-state[-1]:
+            new_state = [1] + [state[1] + state[-1] - 8] + [state[2]] + [state[3]] + [state[4]] + [8]
         else:
             new_state = [1] + [0] + [state[2]] + [state[3]] + [state[4]] + [state[1] + state[-1]]
         return new_state
-    else:
-        return None
     
 def go_to_floor2(state):
     if state[-1]<8 and state[2]>0:
-        if state[2]>10-state[-1]:
-            new_state = [2] + [state[1]] + [state[2] + state[-1] - 10] + [state[3]] + [state[4]] + [8]
+        if state[2]>8-state[-1]:
+            new_state = [2] + [state[1]] + [state[2] + state[-1] - 8] + [state[3]] + [state[4]] + [8]
         else:
             new_state = [2] + [state[1]] + [0] + [state[3]] + [state[4]] + [state[2] + state[-1]]
         return new_state
-    else:
-        return None
 
 def go_to_floor3(state):
     if state[-1]<8 and state[3]>0:
-        if state[3]>10-state[-1]:
-            new_state = [3] + [state[1]] + [state[2]] + [state[3] + state[-1] - 10] + [state[4]] + [8]
+        if state[3]>8-state[-1]:
+            new_state = [3] + [state[1]] + [state[2]] + [state[3] + state[-1] - 8] + [state[4]] + [8]
         else:
             new_state = [3] + [state[1]] + [state[2]] + [0] + [state[4]] + [state[3] + state[-1]]
         return new_state
-    else:
-        return None
 
 def go_to_floor4(state):
     if state[-1]<8 and state[4]>0:
-        if state[4]>10-state[-1]:
-            new_state = [4] + [state[1]] + [state[2]] + [state[3]] + [state[4] + state[-1] - 10] + [8]
+        if state[4]>8-state[-1]:
+            new_state = [4] + [state[1]] + [state[2]] + [state[3]] + [state[4] + state[-1] - 8] + [8]
         else:
             new_state = [4] + [state[1]] + [state[2]] + [state[3]] + [0] + [state[4] + state[-1]]
         return new_state
-    else:
-        return None
 
 def go_to_top(state):
     if(state[-1]>=8):
         state[-1]=0
-        return state
+    return state
     
 
 
@@ -74,17 +66,20 @@ def find_children(state):
     floor4_state=copy.deepcopy(state)
     floor4_child=go_to_floor4(floor4_state)
     
-    
+    top_state=copy.deepcopy(state)
+    top_child=go_to_top(top_state)
 
     
-    if floor1_child!=None: 
+    if floor1_child != None: 
         children.append(floor1_child)
-    if floor2_child!=None: 
+    if floor2_child != None: 
         children.append(floor2_child)
-    if floor3_child!=None: 
+    if floor3_child != None: 
         children.append(floor3_child)
-    if floor4_child!=None: 
+    if floor4_child != None: 
         children.append(floor4_child)
+    if top_child != None:
+        children.append(top_child)
         
     return children
 
@@ -263,7 +258,7 @@ def expand_queue_BFS(queue):
 """
 
 def expand_queue_DFS(queue):
-    return queue[::-1]
+    return queue[::-1] # αντίστροφη λίστα για DFS
 
 """ ----------------------------------------------------------------------------
 **** MAIN
@@ -273,9 +268,12 @@ def expand_queue_DFS(queue):
 
 def main():
     
-    initial_state = [0, 9, 4, 12, 7, 0]
-    goal = [5, 0, 0, 0, 0, 0]
-    method=input('Choose search method (BFS, DFS): ')
+    initial_state = [0, 9, 4, 12, 7, 0] # αρχική κατάσταση
+    goal = [5, 0, 0, 0, 0, 0]           # τελική κατάσταση
+    while True:                         # επιλογή μεθόδου αναζήτησης
+        method = input('Choose search method (BFS or DFS): ')
+        if method == 'BFS' or method == 'DFS':
+            break
     
     """ ----------------------------------------------------------------------------
     **** starting search
@@ -289,6 +287,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-
-
-
