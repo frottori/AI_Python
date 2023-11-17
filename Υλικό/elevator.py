@@ -23,7 +23,6 @@ def go_to_floor1(state):
             new_state = [1] + [state[1] + state[-1] - 8] + [state[2]] + [state[3]] + [state[4]] + [8]
         else:
             new_state = [1] + [0] + [state[2]] + [state[3]] + [state[4]] + [state[1] + state[-1]]
-             # [όροφος ασανσέρ, ένοικοι 1ου, ένοικοι 2ου, ένοικοι 3ου, ένοικοι 4ου, άτομα στο ασανσέρ]
         return new_state
  
 def go_to_floor2(state):
@@ -195,7 +194,6 @@ def extend_queue(queue, method):
 """
 
 def find_solution(front, queue, closed, goal, method):
-#def find_solution(front, queue, closed, method):
        
     if not front:
         print('_NO_SOLUTION_FOUND_')
@@ -206,7 +204,6 @@ def find_solution(front, queue, closed, goal, method):
         new_queue=copy.deepcopy(queue)
         new_queue.pop(0)
         find_solution(new_front, new_queue, closed, goal, method)
-        #find_solution(new_front, new_queue, closed, method)
     
     #elif is_goal_state(front[0]):
     elif front[0]==goal:
@@ -222,7 +219,6 @@ def find_solution(front, queue, closed, goal, method):
         queue_children=extend_queue(queue_copy, method)
         closed_copy=copy.deepcopy(closed)
         find_solution(front_children, queue_children, closed_copy, goal, method)
-        #find_solution(front_children, queue_children, closed_copy, method)
         
         
         
@@ -236,6 +232,10 @@ def main():
     initial_state = [0, 9, 4, 12, 7, 0]
     goal = [5, 0, 0, 0, 0, 0]
     method='DFS'
+    while True: # επιλογή μεθόδου αναζήτησης
+        method = input('Choose search method (BFS or DFS): ')
+        if method == 'BFS' or method == 'DFS':
+            break
     
     """ ----------------------------------------------------------------------------
     **** starting search
@@ -244,8 +244,6 @@ def main():
     
     print('____BEGIN__SEARCHING____')
     find_solution(make_front(initial_state), make_queue(initial_state), [], goal, method)
-    #find_solution(make_front(initial_state), make_queue(initial_state), [], method)
-    
     
 if __name__ == "__main__":
     main()
