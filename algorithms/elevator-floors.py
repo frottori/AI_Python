@@ -192,6 +192,7 @@ def find_solution(front, queue, path, goal, method):
             for child in children:
                 front = add_to_front(front, child)
             front = expand_front(front, method)
+            queue = expand_queue(queue, method) # maybe?
     print('No solution found')
 
 """ ----------------------------------------------------------------------------

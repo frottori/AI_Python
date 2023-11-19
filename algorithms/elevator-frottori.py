@@ -163,7 +163,7 @@ def extend_queue(queue, method):
         for child in children:
             path=copy.deepcopy(node)
             path.append(child)
-            queue_copy.insert(0,path)
+            queue_copy.insert(0,path) #Στην αρχή της ουράς
     
     elif method=='BFS':
         print("Queue:")
@@ -174,7 +174,7 @@ def extend_queue(queue, method):
         for child in children:
             path=copy.deepcopy(node)
             path.append(child)
-            queue_copy.append(path)
+            queue_copy.append(path) #στο τέλος της λίστας
     #elif method=='BestFS':
     #else: "other methods to be added" 
     
