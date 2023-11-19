@@ -128,7 +128,7 @@ def expand_front(front, method):
             print(front)
             node=front.pop(0)
             for child in find_children(node):     
-                front.append(child) #στο τέλος της λίστας
+                front.append(child) # στο τέλος της ουράς
     #elif method=='BestFS':
     #else: "other methods to be added"        
     
