@@ -44,8 +44,6 @@ def go_to_top(state):
         state[-1]=0
     return state
     
-
-
 '''
 Συνάρτηση εύρεσης απογόνων της τρέχουσας κατάστασης
 '''
@@ -82,8 +80,6 @@ def find_children(state):
         children.append(top_child)
         
     return children
-
-
 
 """ ----------------------------------------------------------------------------
 **** FRONT
@@ -266,7 +262,6 @@ def expand_queue_DFS(queue):
 **** Κύριο Πρόγραμμα
 """
 
-
 def main():
     
     initial_state = [0, 9, 4, 12, 7, 0] # αρχική κατάσταση
@@ -285,6 +280,6 @@ def main():
     find_solution(make_front(initial_state), make_queue(initial_state), [], goal, method)
     #find_solution(make_front(initial_state), make_queue(initial_state), [], method)
     
-    
+  
 if __name__ == "__main__":
     main()

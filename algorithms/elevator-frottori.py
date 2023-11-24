@@ -79,18 +79,17 @@ def find_children(state):
     top_state=copy.deepcopy(state)
     top_child=go_to_top(top_state)
     
-
-    if floor1_child!=None: 
-        children.append(floor1_child)
-    if floor2_child!=None:
-        children.append(floor2_child)
-    if floor3_child!=None:
-        children.append(floor3_child)
-    if floor4_child!=None:
-        children.append(floor4_child)
     if top_child!=None:
         children.append(top_child)
-        
+    if floor4_child!=None:
+        children.append(floor4_child)
+    if floor3_child!=None:
+        children.append(floor3_child)
+    if floor2_child!=None:
+        children.append(floor2_child)
+    if floor1_child!=None: 
+        children.append(floor1_child)
+      
     return children
 
 
