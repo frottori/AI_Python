@@ -15,6 +15,7 @@ sys.setrecursionlimit(10**6)
 
 # ******** Operators
 # ******** Τελεστές
+
   
 def go_to_floor1(state):
     if state[-1] < 8 and state[1] > 0:
@@ -61,6 +62,7 @@ def find_children(state):
     
     children=[]
     
+       
     floor1_state=copy.deepcopy(state)
     floor1_child=go_to_floor1(floor1_state)
 
@@ -70,23 +72,24 @@ def find_children(state):
     floor3_state=copy.deepcopy(state)
     floor3_child=go_to_floor3(floor3_state)
     
+    
     floor4_state=copy.deepcopy(state)
     floor4_child=go_to_floor4(floor4_state)
 
     top_state=copy.deepcopy(state)
     top_child=go_to_top(top_state)
-
-    if floor1_child!=None: 
-        children.append(floor1_child)
-    if floor2_child!=None:
-        children.append(floor2_child)
-    if floor3_child!=None:
-        children.append(floor3_child)
-    if floor4_child!=None:
-        children.append(floor4_child)
+    
     if top_child!=None:
         children.append(top_child)
-        
+    if floor4_child!=None:
+        children.append(floor4_child)
+    if floor3_child!=None:
+        children.append(floor3_child)
+    if floor2_child!=None:
+        children.append(floor2_child)
+    if floor1_child!=None: 
+        children.append(floor1_child)
+      
     return children
 
 
@@ -116,7 +119,7 @@ def expand_front(front, method):
             print(front)
             node=front.pop(0)
             for child in find_children(node):     
-                front.insert(0,child) #Στην αρχή της ουράς
+                front.insert(0,child) #Στην αρχή της λίστας
     
     elif method=='BFS':
         if front:
@@ -159,7 +162,7 @@ def extend_queue(queue, method):
         for child in children:
             path=copy.deepcopy(node)
             path.append(child)
-            queue_copy.insert(0,path) # Στην αρχή της ουράς
+            queue_copy.insert(0,path) #Στην αρχή της ουράς
     
     elif method=='BFS':
         print("Queue:")
@@ -216,6 +219,8 @@ def find_solution(front, queue, closed, goal, method):
         closed_copy=copy.deepcopy(closed)
         find_solution(front_children, queue_children, closed_copy, goal, method)
         
+        
+        
 """" ----------------------------------------------------------------------------
 ** Executing the code
 ** κλήση εκτέλεσης κώδικα
@@ -225,6 +230,7 @@ def main():
     
     initial_state = [0, 9, 4, 12, 7, 0]
     goal = [5, 0, 0, 0, 0, 0]
+    method='DFS'
     while True: # επιλογή μεθόδου αναζήτησης
         method = input('Choose search method (BFS or DFS): ')
         if method == 'BFS' or method == 'DFS':
