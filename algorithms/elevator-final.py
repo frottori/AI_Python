@@ -52,7 +52,7 @@ def go_to_floor4(state):
 def go_to_top(state):
     if(state[-1] >= 8):
         state[-1] = 0
-        return state
+    return state
     
 
 '''
