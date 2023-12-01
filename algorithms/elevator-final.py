@@ -51,8 +51,8 @@ def go_to_floor4(state):
 
 def go_to_top(state):
     if(state[-1] >= 8):
-        new_state = [5] + [state[1]] + [state[2]] + [state[3]] + state[4] + [0]
-    return new_state
+        new_state = [5] + [state[1]] + [state[2]] + [state[3]] + [state[4]] + [0]
+        return new_state
     
 
 '''
