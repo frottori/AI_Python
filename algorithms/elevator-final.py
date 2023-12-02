@@ -1,13 +1,3 @@
-""" ----------------------------------------------------------------------------
-******** Search Code for DFS  and other search methods
-******** (expanding front only)
-******** author:  AI lab
-********
-******** Κώδικας για α DFS και άλλες μεθόδους αναζήτησης
-******** (επέκταση μετώπου μόνο)
-******** Συγγραφέας: Εργαστήριο ΤΝ
-"""
-
 import copy
 import sys 
   
@@ -230,16 +220,10 @@ def main():
     
     initial_state = [0, 9, 4, 12, 7, 0]
     goal = [5, 0, 0, 0, 0, 0]
-    method='DFS'
     while True: # επιλογή μεθόδου αναζήτησης
         method = input('Choose search method (BFS or DFS): ')
         if method == 'BFS' or method == 'DFS':
             break
-    
-    """ ----------------------------------------------------------------------------
-    **** starting search
-    **** έναρξη αναζήτησης
-    """
     
     print('____BEGIN__SEARCHING____')
     find_solution(make_front(initial_state), make_queue(initial_state), [], goal, method)
