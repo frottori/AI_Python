@@ -6,7 +6,6 @@ sys.setrecursionlimit(10**6)
 # ******** Operators
 # ******** Τελεστές
 
-  
 def go_to_floor1(state):
     if state[-1] < 8 and state[1] > 0:
         if state[1] > 8 - state[-1]:
@@ -81,8 +80,6 @@ def find_children(state):
         children.append(floor1_child)
       
     return children
-
-
 
 """ ----------------------------------------------------------------------------
 **** FRONT
@@ -208,9 +205,7 @@ def find_solution(front, queue, closed, goal, method):
         queue_children=extend_queue(queue_copy, method)
         closed_copy=copy.deepcopy(closed)
         find_solution(front_children, queue_children, closed_copy, goal, method)
-        
-        
-        
+              
 """" ----------------------------------------------------------------------------
 ** Executing the code
 ** κλήση εκτέλεσης κώδικα
