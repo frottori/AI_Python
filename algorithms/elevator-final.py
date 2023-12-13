@@ -1,3 +1,13 @@
+""" ----------------------------------------------------------------------------
+******** Search Code for DFS  and other search methods
+******** (expanding front only)
+******** author:  AI lab
+********
+******** Κώδικας για α DFS και άλλες μεθόδους αναζήτησης
+******** (επέκταση μετώπου μόνο)
+******** Συγγραφέας: Εργαστήριο ΤΝ
+"""
+
 import copy
 import sys 
   
@@ -6,6 +16,7 @@ sys.setrecursionlimit(10**6)
 # ******** Operators
 # ******** Τελεστές
 
+  
 def go_to_floor1(state):
     if state[-1] < 8 and state[1] > 0:
         if state[1] > 8 - state[-1]:
@@ -81,6 +92,8 @@ def find_children(state):
       
     return children
 
+
+
 """ ----------------------------------------------------------------------------
 **** FRONT
 **** Διαχείριση Μετώπου
@@ -115,7 +128,14 @@ def expand_front(front, method):
             node=front.pop(0)
             for child in find_children(node):     
                 front.append(child) # στο τέλος της ουράς
-    #elif method=='BestFS':
+    elif method=='BestFS':
+        if front:
+            print("Front:")
+            print(front)
+            front.sort(key=lambda x: sum(x[1:4])) 
+            node=front.pop(0)
+            for child in find_children(node):     
+                front.insert(0,child) #Στην αρχή της λίστας
     #else: "other methods to be added"        
     
     return front
@@ -161,7 +181,17 @@ def extend_queue(queue, method):
             path=copy.deepcopy(node)
             path.append(child)
             queue_copy.append(path) #στο τέλος της λίστας
-    #elif method=='BestFS':
+    elif method=='BestFS':
+        print("Queue:")
+        print(queue)
+        node=queue.pop(0)
+        queue_copy=copy.deepcopy(queue)
+        children=find_children(node[-1])
+        for child in children:
+            path=copy.deepcopy(node)
+            path.append(child) 
+            queue_copy.insert(0,path) 
+        queue_copy.sort(key=lambda x: sum(x[-1][1:4]))  
     #else: "other methods to be added" 
     
     return queue_copy
@@ -191,7 +221,6 @@ def find_solution(front, queue, closed, goal, method):
         new_queue.pop(0)
         find_solution(new_front, new_queue, closed, goal, method)
     
-    #elif is_goal_state(front[0]):
     elif front[0]==goal:
         print('_GOAL_FOUND_')
         #print(front[0])
@@ -205,7 +234,9 @@ def find_solution(front, queue, closed, goal, method):
         queue_children=extend_queue(queue_copy, method)
         closed_copy=copy.deepcopy(closed)
         find_solution(front_children, queue_children, closed_copy, goal, method)
-              
+        
+        
+        
 """" ----------------------------------------------------------------------------
 ** Executing the code
 ** κλήση εκτέλεσης κώδικα
@@ -216,9 +247,14 @@ def main():
     initial_state = [0, 9, 4, 12, 7, 0]
     goal = [5, 0, 0, 0, 0, 0]
     while True: # επιλογή μεθόδου αναζήτησης
-        method = input('Choose search method (BFS or DFS): ')
-        if method == 'BFS' or method == 'DFS':
+        method = input('Choose search method (BFS, DFS, BestFS): ')
+        if method == 'BFS' or method == 'DFS'or method == 'BestFS':
             break
+    
+    """ ----------------------------------------------------------------------------
+    **** starting search
+    **** έναρξη αναζήτησης
+    """
     
     print('____BEGIN__SEARCHING____')
     find_solution(make_front(initial_state), make_queue(initial_state), [], goal, method)
