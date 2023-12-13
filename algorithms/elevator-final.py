@@ -135,7 +135,7 @@ def expand_front(front, method):
             node=front.pop(0)
             for child in find_children(node):     
                 front.insert(0,child) #Στην αρχή της λίστας
-            front.sort(key=lambda x: sum(x[1:4])) 
+            front.sort(key=lambda x: sum(x[1:5])) 
     #else: "other methods to be added"        
     
     return front
@@ -191,7 +191,7 @@ def extend_queue(queue, method):
             path=copy.deepcopy(node)
             path.append(child) 
             queue_copy.insert(0,path) 
-        queue_copy.sort(key=lambda x: sum(x[-1][1:4]))  
+        queue_copy.sort(key=lambda x: sum(x[-1][1:5]))  
     #else: "other methods to be added" 
     
     return queue_copy
