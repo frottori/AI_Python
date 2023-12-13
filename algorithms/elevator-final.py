@@ -132,10 +132,10 @@ def expand_front(front, method):
         if front:
             print("Front:")
             print(front)
-            front.sort(key=lambda x: sum(x[1:4])) 
             node=front.pop(0)
             for child in find_children(node):     
                 front.insert(0,child) #Στην αρχή της λίστας
+            front.sort(key=lambda x: sum(x[1:4])) 
     #else: "other methods to be added"        
     
     return front
