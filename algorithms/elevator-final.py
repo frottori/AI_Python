@@ -10,7 +10,6 @@
 
 import copy
 import sys 
-  
 sys.setrecursionlimit(10**6) 
 
 # ******** Operators
@@ -26,7 +25,7 @@ def go_to_floor1(state):
         return new_state
  
 def go_to_floor2(state):
-      if state[-1]< 8 and state[2] > 0:
+      if state[-1] < 8 and state[2] > 0:
         if state[2] > 8 - state[-1]:
             new_state = [2] + [state[1]] + [ state[2] + state[-1] - 8] + [state[3]] + [state[4]] + [8]
         else:
@@ -61,8 +60,7 @@ def go_to_top(state):
 def find_children(state):
     
     children=[]
-    
-       
+         
     floor1_state=copy.deepcopy(state)
     floor1_child=go_to_floor1(floor1_state)
 
@@ -71,23 +69,22 @@ def find_children(state):
 
     floor3_state=copy.deepcopy(state)
     floor3_child=go_to_floor3(floor3_state)
-    
-    
+      
     floor4_state=copy.deepcopy(state)
     floor4_child=go_to_floor4(floor4_state)
 
     top_state=copy.deepcopy(state)
     top_child=go_to_top(top_state)
     
-    if top_child!=None:
+    if top_child != None:
         children.append(top_child)
-    if floor4_child!=None:
+    if floor4_child != None:
         children.append(floor4_child)
-    if floor3_child!=None:
+    if floor3_child != None:
         children.append(floor3_child)
-    if floor2_child!=None:
+    if floor2_child != None:
         children.append(floor2_child)
-    if floor1_child!=None: 
+    if floor1_child != None: 
         children.append(floor1_child)
       
     return children
@@ -118,7 +115,8 @@ def expand_front(front, method):
             print("Front:")
             print(front)
             node=front.pop(0)
-            for child in find_children(node):     
+            children=find_children(node)
+            for child in children:     
                 front.insert(0,child) #Στην αρχή της λίστας
     
     elif method=='BFS':
@@ -126,17 +124,34 @@ def expand_front(front, method):
             print("Front:")
             print(front)
             node=front.pop(0)
-            for child in find_children(node):     
+            children=find_children(node)
+            for child in children:     
                 front.append(child) # στο τέλος της ουράς
     elif method=='BestFS':
         if front:
             print("Front:")
             print(front)
             node=front.pop(0)
-            for child in find_children(node):     
+            children=find_children(node)
+            for child in children:     
                 front.insert(0,child) #Στην αρχή της λίστας
             front.sort(key=lambda x: sum(x[1:5])) 
-    #else: "other methods to be added"        
+    elif method=='HillC':
+        if front:
+            print("Front:")
+            print(front)
+            node=front.pop(0)
+            children=find_children(node)
+
+            best_child=None
+            best_cost=float('inf')
+            for child in children:
+                cost = sum(child[1:5])
+                if cost < best_cost:
+                    best_child = child
+                    best_cost = cost
+            if best_child:
+                front.insert(0, best_child) #Στην αρχή της λίστας (άρα κρατιέται το παιδί με το καλύτερο κόστος)        
     
     return front
 
@@ -169,8 +184,7 @@ def extend_queue(queue, method):
         for child in children:
             path=copy.deepcopy(node)
             path.append(child)
-            queue_copy.insert(0,path) #Στην αρχή της ουράς
-    
+            queue_copy.insert(0,path) #Στην αρχή της ουράς  
     elif method=='BFS':
         print("Queue:")
         print(queue)
@@ -191,8 +205,25 @@ def extend_queue(queue, method):
             path=copy.deepcopy(node)
             path.append(child) 
             queue_copy.insert(0,path) 
-        queue_copy.sort(key=lambda x: sum(x[-1][1:5]))  
-    #else: "other methods to be added" 
+        queue_copy.sort(key=lambda x: sum(x[-1][1:5])) 
+    elif method=='HillC':
+        print("Queue:")
+        print(queue)
+        node=queue.pop(0)
+        queue_copy=copy.deepcopy(queue)
+        children=find_children(node[-1])
+
+        best_path=None
+        best_cost=float('inf') # Αρχικοποίηση κόστους στο άπειρο
+        for child in children:
+            path=copy.deepcopy(node)
+            path.append(child)
+            cost=sum(child[1:5])    # Υπολογισμός του κόστους με βάση το άθροισμα των ενοίκων του παιδιού
+            if cost < best_cost:    # Αν το κόστος του τρέχων παιδιού είναι καλύτερο απο του καλύτερου μέχρι στιγμής
+                best_path=path
+                best_cost=cost
+        if best_path:
+            queue_copy.insert(0, best_path)  # καλύτερο μονοπάτι στην αρχή της ουράς (άρα προστίθεται μόνο το καλύτερο μονοπάτι τα άλλα κλαδεύονται)
     
     return queue_copy
 
@@ -223,7 +254,7 @@ def find_solution(front, queue, closed, goal, method):
     
     elif front[0]==goal:
         print('_GOAL_FOUND_')
-        #print(front[0])
+        print(front[0])
         print(queue[0])
         
     else:
@@ -234,27 +265,15 @@ def find_solution(front, queue, closed, goal, method):
         queue_children=extend_queue(queue_copy, method)
         closed_copy=copy.deepcopy(closed)
         find_solution(front_children, queue_children, closed_copy, goal, method)
-        
-        
-        
-"""" ----------------------------------------------------------------------------
-** Executing the code
-** κλήση εκτέλεσης κώδικα
-"""
            
 def main():
     
     initial_state = [0, 9, 4, 12, 7, 0]
     goal = [5, 0, 0, 0, 0, 0]
     while True: # επιλογή μεθόδου αναζήτησης
-        method = input('Choose search method (BFS, DFS, BestFS): ')
-        if method == 'BFS' or method == 'DFS'or method == 'BestFS':
+        method = input('Choose search method (BFS, DFS, BestFS, HillC): ')
+        if method == 'BFS' or method == 'DFS'or method == 'BestFS' or method == 'HillC':
             break
-    
-    """ ----------------------------------------------------------------------------
-    **** starting search
-    **** έναρξη αναζήτησης
-    """
     
     print('____BEGIN__SEARCHING____')
     find_solution(make_front(initial_state), make_queue(initial_state), [], goal, method)
