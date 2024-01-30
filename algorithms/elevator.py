@@ -247,7 +247,7 @@ def find_solution(front, queue, closed, goal, method):
            
 def main():
     
-    initial_state = [0, 124, 467, 129, 360, 0] # Αρχική κατάσταση
+    initial_state = [0, 9, 4, 12, 7, 0] # Αρχική κατάσταση
     goal = [5, 0, 0, 0, 0, 0] # Τελική κατάσταση
     while True: # επιλογή μεθόδου αναζήτησης
         method = input('Choose search method (BFS, DFS, BestFS, HillC): ')
